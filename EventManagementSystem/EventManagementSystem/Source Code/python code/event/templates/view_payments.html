@@ -1,0 +1,71 @@
+{% if session['role']=='event_organizer'%}
+{% include 'organizer_head.html'%}
+{% elif session['role']=='user'%}
+{% include 'user_home.html'%}
+{% elif session['role']=='admin'%}
+{% include 'admin_head.html'%}
+{% endif%}
+<div class="payment-table-wrapper">
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th>Payment ID#</th>
+        <th>Amount</th>
+        <th>Transaction Date</th>
+        <th>Status</th>
+        <th>Paid By</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% set user = get_user_by_user_id2(payment[9]) %}
+      <tr>
+        <td>{{ payment[0] }}</td>
+        <td>${{ payment[1] }}</td>
+        <td>{{ payment[2] }}</td>
+        <td>{{ payment[3] }}</td>
+        <td>{{ user[1] }} ({{ user[3] }})</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<style>
+.payment-table-wrapper {
+  margin: 30px auto;
+  padding: 20px;
+
+  border-radius: 10px;
+  overflow-x: auto;
+}
+
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 16px;
+  text-align: left;
+}
+
+.styled-table thead tr {
+  background-color: #007bff;
+  color: #ffffff;
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #ddd;
+}
+
+.styled-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.styled-table tbody tr:hover {
+  transition: background-color 0.2s ease-in-out;
+}
+
+.styled-table td {
+  color: #333;
+}
+</style>

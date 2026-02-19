@@ -1,0 +1,100 @@
+{% include 'user_home.html'%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Event</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 40px;
+            background-color: #f5f5f5;
+        }
+        .form-container {
+            background-color: white;
+            padding: 30px;
+            max-width: 700px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        input, button, label {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+        .ticket-fields {
+            margin-top: 20px;
+        }
+        .ticket-box {
+            padding: 15px;
+            border: 1px dashed #aaa;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            background-color: #f9f9f9;
+        }
+        .hidden { display: none; }
+        .total-price {
+            font-size: 18px;
+            font-weight: bold;
+            color: green;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Book Tickets</h2>
+        <form method="POST" action="/book_event_action1">
+            <input type="hidden" name="event_id" value="{{ event_id }}">
+            <input type="hidden" id="ticket_price" name="ticket_price" value="{{ ticket_price }}">
+
+            <label>Number of Tickets:</label>
+            <input type="number" name="quantity" id="quantity" required min="1" oninput="generateFields()">
+
+            <div class="ticket-fields" id="ticketFields"></div>
+
+            {% if int(ticket_price) > 0 %}
+                <div class="total-price" id="totalPrice">Total Price: $0</div>
+            {% else %}
+                <p><strong>This is a Free Event.</strong></p>
+            {% endif %}
+
+            <button type="submit">Confirm Booking</button>
+        </form>
+    </div>
+
+    <script>
+        const price = parseFloat(document.getElementById('ticket_price').value);
+        const qtyInput = document.getElementById('quantity');
+        const ticketFields = document.getElementById('ticketFields');
+        const totalPriceDisplay = document.getElementById('totalPrice');
+
+        function generateFields() {
+            const qty = parseInt(qtyInput.value) || 0;
+            ticketFields.innerHTML = '';
+
+            for (let i = 1; i <= qty; i++) {
+                const box = document.createElement('div');
+                box.className = 'ticket-box';
+                box.innerHTML = `
+                    <label>Ticket ${i} - Name:</label>
+                    <input type="text" name="name_${i}" required>
+
+                    <label>Ticket ${i} - Phone:</label>
+                    <input type="tel" name="phone_${i}" required>
+                `;
+                ticketFields.appendChild(box);
+            }
+            if (price > 0) {
+                const total = (parseFloat(qty) * parseFloat(price)).toFixed(2);
+                console.log(total);
+                totalPriceDisplay.textContent = `Total Price: $${total}`;
+            }
+        }
+    </script>
+</body>
+</html>
+

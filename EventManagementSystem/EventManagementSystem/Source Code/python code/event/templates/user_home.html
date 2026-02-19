@@ -1,0 +1,23 @@
+{%include 'user_head.html'%}
+
+<!-- <h2>Welcome {{session['role']}}"</h2> -->
+
+<body class="bg-customer-home">
+    <nav class="nav-cust-home">
+        <a href="/user_home" class="nav-link-cust">Home</a>
+        <form action="view_events" class="search-bar">
+                 <input type="hidden" name="status" value="Ongoing">
+                <input type="search" name="keyword" id="menu_search" class="input-search" placeholder="Search Event...." onchange="this.form.submit()" autofocus>
+<!--                <button class="btn-search">Search</button>-->
+        </form>
+<!--        <a href="/view_menu" class="nav-link-cust">Menu</a>-->
+<!--        <div><a class="nav-link-cust" href="/view_events?status=Published">View Upcoming</a></div>-->
+        <div><a class="nav-link-cust" href="/view_events?status=Ongoing&keyword=">On Going Events</a></div>
+         <div><a class="nav-link-cust" href="/view_events?status=Past&keyword=">Past Events</a></div>
+        <a href="/view_bookings" class="nav-link-cust">View Bookings</a>
+        <a href="/logout" class="nav-link-cust logout-btn">Logout</a>
+    </nav>
+</body>
+
+<div style="text-align:center;margin-top:100px" >Welcome User</div>
+

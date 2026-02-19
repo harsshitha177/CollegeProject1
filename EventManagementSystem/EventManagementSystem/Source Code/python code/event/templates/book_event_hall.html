@@ -1,0 +1,129 @@
+{% include 'organizer_head.html' %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+
+$(function(){
+    var dtToday = new Date();
+
+    var month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+    if(month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+        day = '0' + day.toString();
+
+    var minDate= year + '-' + month + '-' + day;
+
+    $('#from_date').attr('min', minDate);
+});
+</script>
+<script>
+
+$(function(){
+    var dtToday = new Date();
+
+    var month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+    if(month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+        day = '0' + day.toString();
+
+    var minDate= year + '-' + month + '-' + day;
+
+    $('#to_date').attr('min', minDate);
+});
+</script>
+
+<div class="login-container" style="color:white;">
+  <div class="text-center h5 p-10">Book Event Hall</div>
+    <form method="POST" action="/book_event_hall_action" onsubmit="return validateTime()">
+      <input type="hidden" name="event_hall_id" value="{{ event_hall_id }}">
+      <input type="hidden" id="price_per_hour" value="{{ price_per_hour }}">
+
+      <label>Event Title:</label>
+      <input  class="form-input" type="text" name="title" placeholder="Enter Event Title" required><br>
+
+      <label  class="">From Date:</label>
+      <input   class="form-input" type="date" name="from_date" id="from_date" required><br>
+
+      <label>To Date:</label>
+      <input class="form-input" type="date" name="to_date" id="to_date" required><br>
+
+      <label>From Time:</label>
+      <input class="form-input" type="time" name="from_time" id="from_time" required><br>
+
+      <label>To Time:</label>
+      <input class="form-input" type="time" name="to_time" id="to_time"  required><br>
+
+
+
+      <label>Description:</label>
+      <textarea class="form-input" name="description" required></textarea><br>
+
+      <p><strong>Total Price: $<span id="total_price">0</span></strong></p>
+      <div class="form-group">
+          <input type="submit" class="register-btn" value="Book Now">
+      </div>
+    </form>
+</div>
+<script>
+function calculatePrice() {
+  const fromDate = document.getElementById("from_date").value;
+  const toDate = document.getElementById("to_date").value;
+  const fromTime = document.getElementById("from_time").value;
+  const toTime = document.getElementById("to_time").value;
+  const pricePerHour = parseFloat(document.getElementById("price_per_hour").value);
+
+  if (fromDate && toDate && fromTime && toTime) {
+    const start = new Date(fromDate + "T" + fromTime);
+    const end = new Date(toDate + "T" + toTime);
+
+    const diffMs = end - start;
+    const hours = diffMs / (1000 * 60 * 60);
+
+    if (hours > 0) {
+      const total = (hours * pricePerHour).toFixed(2);
+      document.getElementById("total_price").innerText = total;
+    } else {
+      document.getElementById("total_price").innerText = "0";
+    }
+  }
+}
+
+function validateTime() {
+  const fromDate = document.getElementById("from_date").value;
+  const toDate = document.getElementById("to_date").value;
+  const fromTime = document.getElementById("from_time").value;
+  const toTime = document.getElementById("to_time").value;
+
+  if (!fromDate || !toDate || !fromTime || !toTime) {
+    alert("Please fill all date and time fields.");
+    return false;
+  }
+
+  const start = new Date(fromDate + "T" + fromTime);
+  const end = new Date(toDate + "T" + toTime);
+
+  if (start >= end) {
+    alert("End time must be after start time.");
+    return false;
+  }
+
+  return true;
+}
+
+// Event listeners
+["from_date", "to_date", "from_time", "to_time"].forEach(id => {
+  document.getElementById(id).addEventListener("change", calculatePrice);
+});
+
+
+</script>
+
+
+
+
+

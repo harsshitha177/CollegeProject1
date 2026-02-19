@@ -1,0 +1,86 @@
+{% if session['role']== "admin" %}
+    {% include 'ahead.html' %}
+{% elif session['role']== "event_organizer" %}
+    {% include 'organizer_head.html' %}
+{% elif session['role'] == "user" %}
+    {% include 'user_home.html' %}
+{% endif %}
+{% include 'links.html' %}
+
+
+<div class="payment-box">
+    <div class="payment-title">
+        <h3>Payment Details</h3>
+    </div>
+    <div class="payment-options">
+        <form action="payment_page_action" method="post">
+            <input type="hidden" name="booking_id" value="{{booking_id}}">
+            <input type="hidden" name="total_price" value="{{float(total_price)+float(total_price)*10/100}}">
+
+            <div class="field-group">
+
+                 <label for="tax" class="field-label">Tax(10%) : {{float(total_price)*10/100}}</label>
+                <label for="total_price" class="field-label">Amount : {{total_price}}</label>
+                <label for="total_price" class="field-label">Grand Total : {{float(total_price)+float(total_price)*10/100}}</label>
+                <input name="total_price" id="total_price" class="input-box font-bold" value="$ {{float(total_price)+float(total_price)*10/100}}" disabled>
+            </div>
+
+            <div class="field-group">
+                <label class="field-label">Payment Method</label>
+                <select name="payment_method" class="input-box" required>
+                    <option value="" disabled selected>Select Payment Method</option>
+                    <option value="Debit Card">Debit Card</option>
+                    <option value="Credit Card">Credit Card</option>
+                </select>
+            </div>
+
+            <div class="field-group">
+                <label for="card_holder_name" class="field-label">Card Holder Name</label>
+                <input type="text" name="card_holder_name" class="input-box card-holder" id="card_holder_name" placeholder="Enter Card Holder Name"  maxlength="26" required>
+            </div>
+
+            <div class="field-group">
+                <label for="card_number" class="field-label">Card Number</label>
+                <input type="text" name="card_number" class="input-box card-number" id="card_number" maxlength="19" placeholder="XXXX XXXX XXXX XXXX" required>
+            </div>
+
+            <script>
+                const cardInput = document.getElementById('card_number');
+
+                cardInput.addEventListener('input', function (e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    value = value.substring(0, 16);
+                    let formatted = value.replace(/(.{4})/g, '$1 ').trim();
+                    e.target.value = formatted;
+                });
+            </script>
+
+            <div class="field-group row-field">
+                <div>
+                    <label for="expiry_date" class="field-label">Expiry Date</label>
+                    <input type="month" name="expiry_date" class="input-box" id="expiry_date" required >
+                </div>
+
+                <script>
+                    const expiryInput = document.getElementById("expiry_date");
+                    const today = new Date();
+                    const year = today.getFullYear();
+                    const month = String(today.getMonth() + 1).padStart(2, '0');
+                    expiryInput.min = `${year}-${month}`;
+                </script>
+                <div>
+                    <label for="cvv" class="field-label">CVV</label>
+                    <input type="text" name="cvv" class="input-box" id="cvv" placeholder="CVV" maxlength="3" pattern="\d{3}" required>
+                </div>
+
+            </div>
+
+            <div class="btn-container">
+                <button type="submit" class="pay-btn">Pay Now</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+

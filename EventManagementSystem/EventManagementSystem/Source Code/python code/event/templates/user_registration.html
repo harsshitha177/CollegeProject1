@@ -1,0 +1,83 @@
+{% include 'links.html' %}
+{% include 'home_head.html' %}
+
+<body class="customer-ref-bg">
+
+
+<style>
+.toast-message {
+    padding: 12px 20px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    font-size: 15px;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0px 3px 8px rgba(0,0,0,0.2);
+    animation: fadeOut 3s ease-out forwards;
+}
+.toast-message.success { background-color: #28a745; }
+.toast-message.info { background-color: #17a2b8; }
+.toast-message.error { background-color: #dc3545; }
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    70% { opacity: 1; }
+    100% { opacity: 0; display: none; }
+}
+</style>
+
+<script>
+setTimeout(() => {
+    const container = document.getElementById('toast-container');
+    if (container) container.remove();
+}, 3000);
+</script>
+
+<div class="register-container">
+    <div class="register-title">User Registration</div>
+    <form action="user_registration_action" method="post">
+        <div class="form-group">
+            <label class="form-label" for="name">Name</label>
+            <input class="form-input" type="text" name="name" id="name" maxlength="20" placeholder="Enter Last Name" required>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="email">Email</label>
+            <input class="form-input" type="email" name="email" id="email" maxlength="40" placeholder="Enter Email" required>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="phone">Phone</label>
+            <input class="form-input" type="number" name="phone" id="phone" placeholder="Enter Phone Number" min="1000000000" max="9999999999" required>
+        </div>
+        <script>
+            const phoneInput = document.getElementById('phone');
+            phoneInput.addEventListener('input', function () {
+              if (this.value.length > 10) {
+                this.value = this.value.slice(0, 10); 
+              }
+            });
+        </script>
+
+        <div class="form-group">
+            <label class="form-label" for="password">Password</label>
+            <input type="password" name="password" id="password" class="form-input"  placeholder="Enter Password" required>
+        </div>
+          <div class="form-group">
+            <label class="form-label" for="address">Address</label>
+             <textarea  name="address" id="address" class="form-input"  placeholder="Enter Address" required></textarea>
+        </div>
+        <div class="form-group">
+            <input type="submit" class="register-btn" value="Register">
+        </div>
+
+        <div class="login-link">
+            Already have an account? <a class="login-link-text" href="/user_login">Login Here</a>
+        </div>
+
+    </form>
+</div>
+</body>
+
+
+

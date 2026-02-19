@@ -1,0 +1,84 @@
+{% if session['role']=='event_organizer'%}
+{% include 'organizer_head.html'%}
+{% elif session['role']=='user'%}
+{% include 'user_home.html'%}
+{% elif session['role']=='admin'%}
+{% include 'admin_head.html'%}
+{% endif%}
+<div class="main-wrapper">
+  <h2>Tickets for Booking ID: {{booking_id}}</h2>
+
+  {% if tickets %}
+    <ul class="ticket-list">
+      {% for ticket in tickets %}
+        <li>
+          <strong>Ticket #{{ ticket[1] }}</strong> -
+          Name: {{ ticket[3] }} | Phone: {{ ticket[4] }} | Status: {{ ticket[2] }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No tickets found for this booking.</p>
+  {% endif %}
+
+  <a href="{{ url_for('view_bookings') }}" class="back-btn">← Back to Bookings</a>
+</div>
+
+<style>
+.main-wrapper {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #f9f9ff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.main-wrapper h2 {
+  font-size: 28px;
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.ticket-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.ticket-list li {
+  background: #fff;
+  padding: 12px 18px;
+  margin-bottom: 10px;
+  border-left: 5px solid #007bff;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  color: #333;
+}
+
+.back-btn {
+  display: inline-block;
+  margin-top: 20px;
+  text-decoration: none;
+  padding: 10px 16px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.back-btn:hover {
+  background-color: #0056b3;
+}
+
+.ticket-link {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+}
+
+.ticket-link:hover {
+  text-decoration: underline;
+}
+</style>

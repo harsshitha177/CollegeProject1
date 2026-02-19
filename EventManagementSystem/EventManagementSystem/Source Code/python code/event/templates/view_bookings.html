@@ -1,0 +1,344 @@
+{% if session['role']=='event_organizer'%}
+{% include 'organizer_head.html'%}
+{% elif session['role']=='user'%}
+{% include 'user_home.html'%}
+{% elif session['role']=='admin'%}
+{% include 'admin_head.html'%}
+{% endif%}
+{% if session['role']=='event_organizer'%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Event Bookings</title>
+    <style>
+
+
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+        }
+
+       .booking-card {
+    background: linear-gradient(135deg, #ffffff, #f9fafc);
+    border-radius: 16px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+    padding: 24px;
+    width: 320px;
+    height: 300px; /* 🎯 Fixed height */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.booking-info {
+    font-size: 14px;
+    color: #4a4a4a;
+    margin: 4px 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.event-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.card-footer {
+    font-size: 13px;
+    color: #6c757d;
+    border-top: 1px solid #eee;
+    padding-top: 8px;
+    margin-top: 12px;
+}
+
+
+
+        .booking-info strong {
+            color: #1a1a1a;
+        }
+
+        .status {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 5px 12px;
+            font-size: 13px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .status.Booked {
+            background-color: #d1e7dd;
+            color: #0f5132;
+        }
+
+        .status.Pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status.Cancelled {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+
+    </style>
+    {% elif session['role']=='admin'%}
+     <style>
+
+
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+        }
+
+       .booking-card {
+    background: linear-gradient(135deg, #ffffff, #f9fafc);
+    border-radius: 16px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+    padding: 24px;
+    width: 320px;
+    height: 300px; /* 🎯 Fixed height */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.booking-info {
+    font-size: 14px;
+    color: #4a4a4a;
+    margin: 4px 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.event-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.card-footer {
+    font-size: 13px;
+    color: #6c757d;
+    border-top: 1px solid #eee;
+    padding-top: 8px;
+    margin-top: 12px;
+}
+
+
+
+        .booking-info strong {
+            color: #1a1a1a;
+        }
+
+        .status {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 5px 12px;
+            font-size: 13px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .status.Booked {
+            background-color: #d1e7dd;
+            color: #0f5132;
+        }
+
+        .status.Pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status.Cancelled {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+
+    </style>
+    {% else%}
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #eef2f7;
+            padding: 40px;
+            margin: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+        }
+
+       .booking-card {
+    background: linear-gradient(135deg, #ffffff, #f9fafc);
+    border-radius: 16px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+    padding: 24px;
+    width: 320px;
+    height: 300px; /* 🎯 Fixed height */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.booking-info {
+    font-size: 14px;
+    color: #4a4a4a;
+    margin: 4px 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.event-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.card-footer {
+    font-size: 13px;
+    color: #6c757d;
+    border-top: 1px solid #eee;
+    padding-top: 8px;
+    margin-top: 12px;
+}
+
+
+
+        .booking-info strong {
+            color: #1a1a1a;
+        }
+
+        .status {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 5px 12px;
+            font-size: 13px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .status.Booked {
+            background-color: #d1e7dd;
+            color: #0f5132;
+        }
+
+        .status.Pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status.Cancelled {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+
+    </style>
+    {% endif%}
+</head>
+<body>
+
+    <h1>🎟️ Event Booking Tickets</h1>
+
+    <div class="container">
+        {% for booking in bookings %}
+        {% set user = get_user_by_user_id(booking[6]) %}
+        {% set event = get_event_by_event_id(booking[5]) %}
+        <div class="booking-card">
+            {% if booking[3]=='Booked'%}
+            <div class="status {{ booking[3] }}">{{ booking[3] }}</div>
+            {% else%}
+                        <div style="color:red">{{ booking[3] }}</div>
+
+            {% endif%}
+
+            <div class="event-title">{{ event[6] }}</div>
+            <div class="booking-info"><strong>Booked By:</strong> {{ user[1] }}</div>
+            {% if float(booking[1]) != 0%}
+            <div class="booking-info"><strong>Total Price:</strong> $ <a href="view_payments?booking_id={{booking[0]}}">{{ booking[1] }}</a> </div>
+            {% else%}
+              <div class="booking-info"><strong>Total Price:</strong> Free</div>
+            {%endif%}
+            <div class="booking-info"><strong>Date:</strong> {{ booking[2] }}</div>
+            <div class="booking-info"><strong>No. of Tickets:</strong> {{ booking[4] }}</div>
+
+            <div class="card-footer">
+                Booking ID: #{{ loop.index }}
+            </div>
+            <a href="view_tickets?booking_id={{booking[0]}}">View Tickets</a>
+             {% if session['role']=='user'%}
+            {% if booking[3]=='Booked'%}
+              <a href="cancel_booking?booking_id={{booking[0]}}">Cancel Booking</a>
+            {% endif%}
+            {% endif%}
+            {% if session['role']=='user'%}
+            {% set isReview = getIsReview(event[0])%}
+            {% if isReview==0%}
+            <div>
+                <a href="give_review?event_id={{event[0]}}">Give Review</a>
+            </div>
+            {% endif%}
+            {% endif%}
+        </div>
+        {% endfor %}
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,77 @@
+{% if session['role']=='event_organizer'%}
+{% include 'organizer_head.html'%}
+{% elif session['role']=='user'%}
+{% include 'user_home.html'%}
+{% elif session['role']=='admin'%}
+{% include 'admin_head.html'%}
+{% endif%}
+<div style="text-align:center;margin-top:10px">Reviews</div>
+<div class="payment-table-wrapper">
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th>Review ID#</th>
+        <th>Rating</th>
+        <th>Review</th>
+        <th>Date</th>
+        <th>Review By</th>
+        <th>Event</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for review in reviews%}
+      {% set event = get_event_by_event_id(review[5])%}
+      {% set user = get_user_by_user_id(review[4])%}
+      <tr>
+        <td>{{ review[0] }}</td>
+        <td>{{ review[2] }}</td>
+        <td>{{ review[1] }}</td>
+        <td>{{ review[3] }}</td>
+        <td>{{ user[1] }} ({{ user[3] }})</td>
+        <td>{{ event[6] }}</td>
+      </tr>
+    {% endfor%}
+    </tbody>
+  </table>
+</div>
+
+<style>
+.payment-table-wrapper {
+  margin: 30px auto;
+  padding: 20px;
+
+  border-radius: 10px;
+  overflow-x: auto;
+}
+
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 16px;
+  text-align: left;
+}
+
+.styled-table thead tr {
+  background-color: #007bff;
+  color: #ffffff;
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #ddd;
+}
+
+.styled-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.styled-table tbody tr:hover {
+  transition: background-color 0.2s ease-in-out;
+}
+
+.styled-table td {
+  color: #333;
+}
+</style>

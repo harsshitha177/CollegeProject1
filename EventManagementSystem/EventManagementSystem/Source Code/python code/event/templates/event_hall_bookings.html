@@ -1,0 +1,272 @@
+{% if session['role']== "admin" %}
+    {% include 'admin_head.html' %}
+{% elif session['role']== "event_organizer" %}
+    {% include 'organizer_head.html' %}
+{% elif session['role'] == "user" %}
+    {% include 'user_home.html' %}
+{% endif %}
+
+
+
+<div class="main-wrapper">
+<div class="">
+  {% for event_hall_booking in event_hall_bookings %}
+  {% set event_organizer = get_organizer_by_organizer_id(event_hall_booking[10]) %}
+  {% set event_hall = get_event_hall_by_event_hall_id(event_hall_booking[11]) %}
+
+
+    <div class="hall-card mt-15">
+      <div class="hall-info mt-10" style="text-align: center;">
+          <div class="h4">{{ event_hall_booking[7] }}</div>
+      <p class="mt-5">
+        The event organizer <strong>{{ event_organizer[1] }}</strong> (Email: {{ event_organizer[2] }},
+          Phone: {{ event_organizer[3] }}) has booked the event hall <strong>{{ event_hall[1] }}</strong>
+          for the event titled <strong>"{{ event_hall_booking[7] }}"</strong>. The booking was made on <strong>
+          {{ event_hall_booking[1] }}</strong>, scheduled from <strong>{{ event_hall_booking[2] }}</strong> to
+          <strong>{{ event_hall_booking[3] }}</strong>. For each of these days, the event is planned from <strong>
+          {{ event_hall_booking[4] }}</strong> to <strong>{{ event_hall_booking[5] }}</strong>.
+          The total price for the booking is <strong>${{ event_hall_booking[6] }}</strong>.
+          Description: <em>{{ event_hall_booking[8] }}</em>. The current status of the booking is
+          <strong><span style="
+                padding: 4px 10px;
+                background-color: {% if event_hall_booking[9] == 'Accepted' %}#28a745{% elif event_hall_booking[9] == 'Rejected' %}#dc3545{% else %}#ffc107{% endif %};
+                color: white;
+                border-radius: 4px;
+                font-weight: bold;
+              "> {{ event_hall_booking[9] }}
+  </span></strong>.
+      </p>
+
+        {% if session['role'] == 'admin' %}
+        <div class="form-row">
+          {% if  event_hall_booking[9] == 'Booked' %}
+
+            <div class="form-group">
+              <a href="/accept_hall_booking?event_hall_booking_id={{ event_hall_booking[0] }}" class="book-btn">Accept</a>
+            </div>
+            <div class="form-group">
+              <a href="/reject_hall_booking?event_hall_booking_id={{ event_hall_booking[0] }}" style="background-color:Red;" class="book-btn">Reject</a>
+            </div>
+
+
+        {% endif %}
+
+        </div>
+        {% endif %}
+         {% if session['role'] == 'event_organizer' %}
+          {% if  event_hall_booking[9] == 'Accepted' %}
+        <a href="/publish_event?event_hall_booking_id={{ event_hall_booking[0] }}" class="book-btn">Publish</a>
+        {% endif %}
+
+        {% endif %}
+      </div>
+    </div>
+  {% endfor %}
+</div>
+</div>
+
+  <!-- CSS Styles -->
+  <style>
+  .main-wrapper {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #fdfdfd;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+
+  .title {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: #333;
+  }
+
+  /* Search Bar */
+  .search-wrapper {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .search-form {
+    display: inline-flex;
+    gap: 10px;
+  }
+
+  .search-input {
+    width: 400px;
+    padding: 12px 16px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 2px solid #ccc;
+  }
+
+  .search-button {
+    padding: 12px 24px;
+    background-color: #007BFF;
+    border: none;
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .search-button:hover {
+    background-color: #0056b3;
+  }
+
+  /* Grid Layout */
+  .hall-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    gap: 30px;
+  }
+
+  /* Event Hall Card */
+  .hall-card {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    overflow: hidden;
+  }
+
+  .hall-image img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .hall-info {
+    padding: 15px;
+  }
+
+  .hall-name {
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: #222;
+  }
+
+  .book-btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+  }
+
+  .book-btn:hover {
+    background-color: #218838;
+  }
+  </style>
+
+
+<style>
+/* Main Container */
+.main-wrapper {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+  background: linear-gradient(to bottom right, #f8f9fa, #ffffff);
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
+
+/* Card Container */
+.hall-card {
+  background: linear-gradient(to bottom, #ffffff, #f0f0f8);
+  border: 1px solid #ddd;
+  border-left: 8px solid #007bff;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 25px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hall-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+}
+
+/* Heading */
+.hall-card .h4 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #007bff;
+  margin-bottom: 10px;
+}
+
+/* Paragraphs */
+.hall-card p {
+  line-height: 1.6;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+/* Buttons */
+.book-btn {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.book-btn:hover {
+  background-color: #218838;
+}
+
+.book-btn[style*="background-color:Red;"] {
+  background-color: #dc3545 !important;
+}
+.book-btn[style*="background-color:Red;"]:hover {
+  background-color: #c82333 !important;
+}
+
+/* Status Styling */
+strong:contains("Accepted") {
+  color: #28a745;
+}
+strong:contains("Rejected") {
+  color: #dc3545;
+}
+strong:contains("Pending") {
+  color: #ffc107;
+}
+
+/* Optional: Animate card entry */
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.hall-card {
+  animation: fadeInSlide 0.5s ease-in-out;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .hall-card {
+    padding: 15px;
+  }
+  .hall-card .h4 {
+    font-size: 20px;
+  }
+}
+</style>
+

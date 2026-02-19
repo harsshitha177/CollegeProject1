@@ -1,0 +1,56 @@
+<!-- <body class="bg-image-login">
+    <h2 class="text-center mt-200">Welcome {{session['role']}}!</h2>
+</body>  -->
+
+
+{% include 'admin_head.html' %}
+
+<div class="admin-dashboard">
+    <div class="dashboard-header">
+        <h1 class="dashboard-title">Admin Dashboard</h1>
+        <p class="dashboard-welcome">Welcome, {{session['role']}}! Manage your Event Management  platform here</p>
+    </div>
+
+    <div class="dashboard-sections">
+        <div class="section-row">
+            <div class="dashboard-section">
+                <div class="section-header">
+                    <h2>Quick Actions</h2>
+                </div>
+                <div class="action-cards">
+                    <a href="/add_event_halls" class="action-card">
+                        <div class="action-icon">
+                            <img src="../static/images/food-truck-icon.png" alt="Food Truck" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2082/2082063.png'">
+                        </div>
+                        <div class="action-info">
+                            <h3>Manage Event Halls</h3>
+                            <p>Add, view, and manage  event halls and their details.</p>
+                        </div>
+                    </a>
+
+                    
+                    <a href="/add_category" class="action-card">
+                        <div class="action-icon">
+                            <img src="../static/images/category-icon.png" alt="Category" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3176/3176366.png'">
+                        </div>
+                        <div class="action-info">
+                            <h3>Event Categories</h3>
+                            <p>Create and organize categories for different types of events</p>
+                        </div>
+                    </a>
+                    
+                    <a href="/event_hall_bookings" class="action-card">
+                        <div class="action-icon">
+                            <img src="../static/images/location-icon.png" alt="Location" onerror="this.src='https://cdn-icons-png.flaticon.com/512/484/484167.png'">
+                        </div>
+                        <div class="action-info">
+                            <h3>View Event Hall Bookings</h3>
+                            <p>Track all bookings made by organizers and customers. View schedules, availability, and booking statuses.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

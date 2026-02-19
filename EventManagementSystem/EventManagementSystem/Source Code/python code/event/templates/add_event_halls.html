@@ -1,0 +1,181 @@
+{% include 'admin_head.html' %}
+
+<div class="layout-wrapper">
+  <!-- Form Section -->
+  <div class="form-section">
+    <h3>Add Event Halls</h3>
+    <form action="add_event_halls_action" method="post" enctype="multipart/form-data">
+      <div class="form-field">
+        <label for="event_hall_name">Event Hall Name</label>
+        <input class="form-input" type="text" name="event_hall_name" id="event_hall_name" maxlength="20" required placeholder="Enter Event Hall Name">
+      </div>
+
+      <div class="form-field">
+        <label for="capacity">Capacity</label>
+        <input class="form-input" type="number" name="capacity" id="capacity" required placeholder="Enter Capacity">
+      </div>
+
+      <div class="form-field">
+        <label for="price_per_hour">Price Per Hour</label>
+        <input class="form-input" type="number" name="price_per_hour" id="price_per_hour" required placeholder="Enter Price Per Hour">
+      </div>
+
+      <div class="form-field">
+        <label>Category</label>
+        <select name="category_id" class="form-input" required>
+          <option value="">Choose Category</option>
+          {% for category in categories %}
+            <option value="{{ category[0] }}">{{ category[1] }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="form-field">
+        <label for="about">About</label>
+        <textarea class="form-textarea" name="about" id="about" placeholder="Enter Description" required></textarea>
+      </div>
+
+      <div class="form-field">
+        <label for="location">Location</label>
+        <textarea class="form-textarea" name="location" id="location" placeholder="Enter Location" required></textarea>
+      </div>
+
+      <div class="form-field">
+        <label for="picture">Add Picture</label>
+        <input class="form-input" type="file" name="picture" id="picture" accept="image/*" required>
+      </div>
+
+      <div class="form-field">
+        <input class="submit-button" type="submit" value="Add Here">
+      </div>
+    </form>
+  </div>
+
+  <!-- Cards Section -->
+  <div class="cards-section">
+    <h3>All Event Halls</h3>
+    <div class="cards-container">
+      {% for event_hall in event_halls %}
+      <div class="card-box">
+        <img src="/static/EventHalls/{{ event_hall[2] }}" alt="Event Hall Image" class="hall-img">
+        <div class="card-details">
+          <h4>{{ event_hall[1] }}</h4>
+          <p><strong>Capacity:</strong> {{ event_hall[3] }}</p>
+          <p><strong>Price Per Hour:</strong> ${{ event_hall[4] }}</p>
+          <p><strong>About:</strong> {{ event_hall[6] }}</p>
+          <p><strong>Location:</strong> {{ event_hall[5] }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+
+<style>
+/* Layout */
+.layout-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+/* Form Section */
+.form-section {
+  flex: 1;
+  min-width: 300px;
+}
+
+.form-section h3 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Cards Section */
+.cards-section {
+  flex: 1;
+  min-width: 300px;
+}
+
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* Individual Card */
+.card-box {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  transition: 0.3s;
+}
+
+.card-box:hover {
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  transform: translateY(-3px);
+}
+
+.hall-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.card-details {
+  padding: 15px;
+}
+
+.card-details h4 {
+  margin-bottom: 10px;
+  font-size: 20px;
+  color: #007bff;
+}
+
+/* Form Fields */
+.form-field {
+  margin-bottom: 20px;
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #28a745;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #218838;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .layout-wrapper {
+    flex-direction: column;
+  }
+}
+</style>

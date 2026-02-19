@@ -1,0 +1,22 @@
+{% include 'admin_head.html' %}
+
+
+<div class="containe">
+    <div class="">
+        <div class="register-title">
+            <form action="edit_category_action">
+            <input type="hidden" name="category_id" value="{{category_id}}">
+
+                <div class="form-group">
+                    <label class="form-label" for="category_name" style="color: black;">Category Name</label>
+                    <input class="form-input" type="text" name="category_name" id="category_name" value="{{categories[1]}}" maxlength="20" placeholder="Enter Category" required>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" class="register-btn" value="save">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

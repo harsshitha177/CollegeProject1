@@ -1,0 +1,72 @@
+{% include 'user_home.html'%}
+<div class="review-wrapper">
+  <form class="review-form" action="give_review_action" method="post">
+    <input type="hidden" name="event_id" value="{{ event_id }}">
+
+    <label for="rating">Rating</label>
+    <select name="rating" id="rating" class="form-input">
+      <option value="5">5</option>
+      <option value="4">4</option>
+      <option value="3">3</option>
+      <option value="2">2</option>
+      <option value="1">1</option>
+    </select>
+
+    <label for="review">Review</label>
+    <textarea name="review" id="review" class="form-textarea" placeholder="Give your review..." required></textarea>
+
+    <input type="submit" value="Submit" class="submit-btn">
+  </form>
+</div>
+<style>
+.review-wrapper {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 25px;
+  background-color: #fefefe;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.review-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: #333;
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-size: 15px;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.form-textarea {
+  height: 120px;
+  resize: vertical;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: blue;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #218838;
+}
+</style>
